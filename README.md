@@ -1,66 +1,149 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Folkatech Laravel Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a simple Laravel application to manage Companies and Employees with authentication, CRUD operations, and tests.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Basic authentication using Laravel Breeze.
+- CRUD functionality for managing companies and employees.
+- Admin panel for managing the application.
+- Unit tests for `Company` and `Employee` models.
+- Email notifications when a new employee is added to a company.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Prerequisites
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Before you begin, make sure you have the following installed:
 
-## Learning Laravel
+- PHP >= 8.1
+- Composer
+- MySQL or SQLite
+- Node.js and NPM (for frontend assets)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Follow these steps to set up the project on your local machine.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Clone the repository
 
-## Laravel Sponsors
+```bash
+git clone https://github.com/restuedos/folkatech-laravel.git
+cd folkatech-laravel
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 2. Install dependencies
 
-### Premium Partners
+Run the following command to install PHP dependencies:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+composer install
+```
+
+Then, install the frontend dependencies:
+
+```bash
+npm install
+```
+
+### 3. Set up the environment file
+
+Copy the .env.example file to .env:
+
+```bash
+cp .env.example .env
+```
+
+### 4. Set up the database
+
+Ensure your database is properly configured in .env file. You can use MySQL or SQLite for local development. If you're using SQLite, you can set it like this:
+
+```env
+DB_CONNECTION=sqlite
+DB_DATABASE=/path_to_your_project/database/database.sqlite
+```
+
+Alternatively, for MySQL, set:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=folkatech_db
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### 5. Run migrations and seed the database
+
+Run the migrations and seed the database with the default user:
+
+```bash
+php artisan migrate --seed
+```
+
+This will create the necessary tables in the database and also create the default admin user with the following credentials:
+
+Email: `admin@folkatech.com`
+Password: `password`
+
+### 6. Build and run frontend assets
+
+Compile the frontend assets using the following commands:
+
+```bash
+npm run dev
+```
+
+For production:
+```bash
+npm run build
+```
+
+### 7. Start the development server
+
+Run the Laravel development server:
+
+```bash
+php artisan serve
+```
+
+You can now access the application at `http://127.0.0.1:8000`.
+
+---
+
+## Usage
+- Authentication: Use the default admin credentials (`admin@folkatech.com` / `password`) to log in.
+- Manage Companies and Employees: Navigate to the `Companies` and `Employees` sections in the admin panel to manage records.
+
+---
+
+## Running Tests
+
+To run the unit tests for the `Company` and `Employee` models, use the following command:
+
+```bash
+php artisan test
+```
+
+This will run all the tests, including those that test CRUD functionality for Company and Employee.
+
+## Project Structure
+
+- app/Models - Contains the main application models (`Company`, `Employee`, etc.).
+- app/Http/Controllers - Controllers that manage the business logic for `Company` and `Employee` models.
+- app/Http/Requests - Manages request validation for `Company` and `Employee` data inputs.
+- app/Notifications - Includes notification logic, such as notifying administrators of new employees.
+- database/factories - Provides factory definitions for generating test data for `Company` and `Employee`.
+- database/migrations - Database migrations for setting up the necessary tables.
+- database/seeders - Seeder classes to populate the database with sample data.
+- resources/views/companies - Contains Blade templates for the `Company` feature's user interface.
+- resources/views/employees - Contains Blade templates for the `Employee` feature's user interface.
+- routes - Defines application routes, including those for `Company` and `Employee` features.
+- tests/Unit - Unit tests to ensure functionality for `Company` and `Employee`.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+If you'd like to contribute to the project, feel free to fork the repository and submit a pull request. Please ensure that all tests pass before submitting.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License - see the LICENSE file for details.
