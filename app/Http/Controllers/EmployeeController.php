@@ -10,15 +10,28 @@ use App\Models\User;
 use App\Notifications\NewEmployeeNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Schema;
 
 class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $employees = Employee::with('company')->paginate(10); // Fetch 10 employees per page
+        $search = $request->query('search');
+        $employees = Employee::with('company')
+            ->when($search, function ($query, $search) {
+                $columns = Schema::getColumnListing('employees');
+
+                $query->where(function ($query) use ($columns, $search) {
+                    foreach ($columns as $column) {
+                        $query->orWhere($column, 'like', "%$search%");
+                    }
+                });
+            })
+            ->paginate(10); // Fetch 10 employees per page
+
         return view('employees.index', compact('employees'));
     }
 

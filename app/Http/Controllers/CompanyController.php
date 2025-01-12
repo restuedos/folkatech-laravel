@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
@@ -13,9 +14,19 @@ class CompanyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $companies = Company::paginate(10);
+        $search = $request->query('search');
+        $companies = Company::when($search, function ($query, $search) {
+            $columns = Schema::getColumnListing('companies');
+
+            $query->where(function ($query) use ($columns, $search) {
+                foreach ($columns as $column) {
+                    $query->orWhere($column, 'like', "%$search%");
+                }
+            });
+        })->paginate(10);
+
         return view('companies.index', compact('companies'));
     }
 
