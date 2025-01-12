@@ -22,6 +22,7 @@
                         <thead class="bg-gray-50 dark:bg-gray-700">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">#</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Logo</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Name</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Email</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Website</th>
@@ -32,6 +33,9 @@
                             @foreach ($companies as $company)
                             <tr>
                                 <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">{{ $loop->iteration }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">
+                                    <img src={{ $company->logo }}/>
+                                </td>
                                 <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">{{ $company->name }}</td>
                                 <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">{{ $company->email }}</td>
                                 <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">{{ $company->website }}</td>
